@@ -10,6 +10,7 @@ const config: Config = {
     extend: {
       colors: {
         jet: "#433A3F",
+        nyanza: "#E4FDE1",
         olive: "#677601",
       },
     },

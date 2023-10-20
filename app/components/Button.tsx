@@ -1,12 +1,8 @@
-interface ButtonProp {
-  text: string;
-}
-
-export default function Button({ text }: ButtonProp) {
+export default function Button({ children }: { children: string }) {
   return (
     <>
-      <button className="bg-olive px-4 py-2 rounded-full hover:scale-105 text-white font-bold">
-        {text}
+      <button className="block bg-olive px-5 py-2.5 rounded-full hover:scale-105 text-white font-bold">
+        {children}
       </button>
     </>
   );
