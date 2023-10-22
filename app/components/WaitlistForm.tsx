@@ -91,7 +91,11 @@ export default function WaitlistForm({
             className="block outline-0 border border-olive rounded-lg px-2 py-1 text-sm text-clip placeholder:text-center"
           />
           {validationErrors.from_email && (
-            <p className="absolute text-red-500 text-xs text-left">
+            <p
+              className={`${
+                isModal ? "text-white text-center" : "text-red-500 text-left"
+              } absolute  text-xs `}
+            >
               {validationErrors.from_email}
             </p>
           )}
