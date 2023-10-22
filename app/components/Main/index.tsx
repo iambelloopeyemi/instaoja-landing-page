@@ -17,9 +17,9 @@ export default function Main() {
           Doorstep
         </h1>
         <p className="font-medium tablet:text-lg mb-10">
-          InstaÒjà promises to delivers the Essence of Local Markets! Fresh,
-          Affordable, and Swift Grocery Delivery in Lagos, Nigeria. Experience
-          Convenience Like Never Before.
+          InstaÒjà delivers the Essence of Local Markets! Fresh, Affordable, and
+          Swift Grocery Delivery in Lagos, Nigeria. Experience Convenience Like
+          Never Before.
         </p>
         <div className="flex justify-center">
           <WaitlistForm setOpen={setOpen} setSuccessful={setSuccessful} />
