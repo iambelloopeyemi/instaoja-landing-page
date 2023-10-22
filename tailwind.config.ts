@@ -7,6 +7,13 @@ const config: Config = {
     "./app/**/*.{js,ts,jsx,tsx,mdx}",
   ],
   theme: {
+    screens: {
+      default: "280px",
+      mobile: "360px",
+      tablet: "640px",
+      laptop: "1024px",
+      desktop: "1280px",
+    },
     extend: {
       colors: {
         jet: "#433A3F",

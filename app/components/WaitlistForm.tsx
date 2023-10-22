@@ -4,23 +4,24 @@ import emailjs from "@emailjs/browser";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { ValidationError } from "yup";
-import {
-  EMAILJS_SERVICE_ID,
-  EMAILJS_TEMPLATE_ID,
-  EMAILJS_PUBLIC_KEY,
-} from "../utils/EnvironmentVariables";
-import { EmailSchema } from "../utils/EmailSchema";
+import { EmailSchema } from "../utils/ValidationSchema";
+import { ValidationErrorsProps, WaitlistFormProp } from "../utils/Props";
+import Button from "./Button";
 
-interface ValidationErrorsProps {
-  [key: string]: string | undefined;
-  email?: string;
-}
+const EMAILJS_SERVICE_ID = "service_l5ogsxk";
+const EMAILJS_TEMPLATE_ID = "template_slld4ur";
+const EMAILJS_PUBLIC_KEY = "I1_eDRaEfPm_GQHWW";
 
 const initialValidationErrors: ValidationErrorsProps = {
-  email: "",
+  from_email: "",
 };
 
-export default function WaitlistForm() {
+export default function WaitlistForm({
+  setOpen,
+  setSuccessful,
+  isModal,
+  checkModal,
+}: WaitlistFormProp) {
   const [email, setEmail] = useState<string>("");
   const [validationErrors, setValidationErrors] =
     useState<ValidationErrorsProps>(initialValidationErrors);
@@ -34,18 +35,20 @@ export default function WaitlistForm() {
 
     try {
       const templateParams = {
-        from_email: `Here is my email ${email}`,
+        from_email: email,
       };
-      await EmailSchema.validate({ email }, { abortEarly: false });
-      if (EMAILJS_SERVICE_ID && EMAILJS_TEMPLATE_ID && EMAILJS_PUBLIC_KEY) {
-        await emailjs.send(
-          EMAILJS_SERVICE_ID,
-          EMAILJS_TEMPLATE_ID,
-          templateParams,
-          EMAILJS_PUBLIC_KEY
-        );
-      }
+      await EmailSchema.validate(templateParams, { abortEarly: false });
+      const response = await emailjs.send(
+        EMAILJS_SERVICE_ID,
+        EMAILJS_TEMPLATE_ID,
+        templateParams,
+        EMAILJS_PUBLIC_KEY
+      );
       // console.log(templateParams);
+      if (response) {
+        setOpen(false);
+        setSuccessful((previousState) => !previousState);
+      }
       toast.success("Email sent successfully!", {
         position: toast.POSITION.TOP_RIGHT,
       });
@@ -73,28 +76,32 @@ export default function WaitlistForm() {
 
   return (
     <>
-      <form onSubmit={sendEmail} className="flex items-center gap-5">
-        <div>
+      <form
+        onSubmit={sendEmail}
+        className={`${
+          isModal
+            ? "flex flex-col gap-2"
+            : "flex default:flex-col tablet:flex-row gap-4"
+        } items-center`}
+      >
+        <div className="relative">
           <input
             type="email"
             placeholder="you@example.com"
             value={email}
             onChange={handleEmailChange}
-            className="block outline-0 border border-olive p-1 text-sm text-clip"
+            className="block outline-0 border border-olive rounded-lg px-2 py-1 text-sm text-clip placeholder:text-center"
           />
-          {validationErrors.email && (
-            <p className="text-red-500 text-sm text-left">
-              {validationErrors.email}
+          {validationErrors.from_email && (
+            <p className="absolute text-red-500 text-xs text-left">
+              {validationErrors.from_email}
             </p>
           )}
         </div>
         <div>
-          <button
-            type="submit"
-            className="bg-olive px-5 py-2.5 rounded-full hover:scale-105 text-white font-bold"
-          >
-            Join Waitlist
-          </button>
+          <Button type="submit" checkModal={checkModal}>
+            Submit
+          </Button>
         </div>
       </form>
       <ToastContainer />
