@@ -79,7 +79,9 @@ export default function WaitlistForm({
       <form
         onSubmit={sendEmail}
         className={`${
-          isModal ? "flex flex-col" : "flex default:flex-col tablet:flex-row"
+          isModal
+            ? "flex flex-col gap-5"
+            : "flex default:flex-col tablet:flex-row"
         } items-center gap-4`}
       >
         <div className="relative">
@@ -93,8 +95,8 @@ export default function WaitlistForm({
           {validationErrors.from_email && (
             <p
               className={`${
-                isModal ? "text-white text-center" : "text-red-500 text-left"
-              } absolute  text-xs `}
+                isModal ? "text-white left-1" : "text-red-500"
+              } absolute text-xs`}
             >
               {validationErrors.from_email}
             </p>
