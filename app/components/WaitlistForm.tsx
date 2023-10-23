@@ -36,6 +36,7 @@ export default function WaitlistForm({
     try {
       const templateParams = {
         from_email: email,
+        reply_to: email,
       };
       await EmailSchema.validate(templateParams, { abortEarly: false });
       const response = await emailjs.send(
