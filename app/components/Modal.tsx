@@ -7,9 +7,6 @@ import Button from "./Button";
 
 export default function Modal() {
   const OpenContext = useOpen();
-  if (OpenContext === null) {
-    return null;
-  }
   const { isOpen, setOpen, isSuccessful, setSuccessful } = OpenContext;
   const toggleModal = () => {
     setOpen(false);

@@ -4,9 +4,6 @@ import WaitlistForm from "../WaitlistForm";
 
 export default function Main() {
   const OpenContext = useOpen();
-  if (OpenContext === null) {
-    return null;
-  }
   const { setOpen, setSuccessful } = OpenContext;
   return (
     <main className="min-h-screen default:px-2.5 mobile:px-5 tablet:px-20 default:py-24 mobile:py-28">
